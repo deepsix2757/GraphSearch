@@ -92,7 +92,39 @@ d3.json("./data/links.json").then(function(data){
 
     // Add nodes
     g.nodes().forEach(d => {
-        svg.append("rect")
+        const group = svg.append("g")
+                        .on("mouseover", () => {
+                            svg.select("#" + d)
+                                .attr("fill", nodeAttr.boxOverColor)
+                                .attr("stroke", nodeAttr.boxOverColor);
+                            g.neighbors(d).forEach(v => {
+                                svg.select("#" + v)
+                                    .attr("fill", nodeAttr.boxChildFillColor)
+                                    .attr("stroke", nodeAttr.boxChildFillColor);
+                            });
+                            g.nodeEdges(d).forEach(v => {
+                                svg.select("#" + v.v + "-" + v.w)
+                                    .attr("marker-end", "url(#triangle-select)")
+                                    .attr("stroke", nodeAttr.boxChildFillColor);
+                                });
+                        })
+                        .on("mouseout", () => {
+                                svg.select("#" + d)
+                                .attr("fill", nodeAttr.boxFillColor)
+                                .attr("stroke", nodeAttr.boxFillColor);
+                                g.neighbors(d).forEach(v => {
+                                    svg.select("#" + v)
+                                    .attr("fill", nodeAttr.boxFillColor)
+                                    .attr("stroke", nodeAttr.boxFillColor);
+                                });
+                                g.nodeEdges(d).forEach(v => {
+                                    svg.select("#" + v.v + "-" + v.w)
+                                    .attr("marker-end", "url(#triangle)")
+                                    .attr("stroke", nodeAttr.boxFillColor);
+                                });
+                        });
+
+        group.append("rect")
            .attr("class", "node")
            .attr("id", d)
            .attr("width", nodeAttr.width)
@@ -102,39 +134,9 @@ d3.json("./data/links.json").then(function(data){
            .attr("rx", "4")
            .attr("ry", "4")
            .attr("fill",  nodeAttr.boxFillColor)
-           .attr("stroke",  nodeAttr.boxFillColor)
-           .on("mouseover", () => {
-                svg.select("#" + d)
-                   .attr("fill", nodeAttr.boxOverColor)
-                   .attr("stroke", nodeAttr.boxOverColor);
-                g.neighbors(d).forEach(v => {
-                    svg.select("#" + v)
-                       .attr("fill", nodeAttr.boxChildFillColor)
-                       .attr("stroke", nodeAttr.boxChildFillColor);
-                });
-                g.nodeEdges(d).forEach(v => {
-                    svg.select("#" + v.v + "-" + v.w)
-                       .attr("marker-end", "url(#triangle-select)")
-                       .attr("stroke", nodeAttr.boxChildFillColor);
-                });
-           })
-           .on("mouseout", () => {
-                svg.select("#" + d)
-                   .attr("fill", nodeAttr.boxFillColor)
-                   .attr("stroke", nodeAttr.boxFillColor);
-                g.neighbors(d).forEach(v => {
-                    svg.select("#" + v)
-                       .attr("fill", nodeAttr.boxFillColor)
-                       .attr("stroke", nodeAttr.boxFillColor);
-                });
-                g.nodeEdges(d).forEach(v => {
-                    svg.select("#" + v.v + "-" + v.w)
-                       .attr("marker-end", "url(#triangle)")
-                       .attr("stroke", nodeAttr.boxFillColor);
-                });
-            });
+           .attr("stroke",  nodeAttr.boxFillColor);
 
-        svg.append("text")
+        group.append("text")
            .attr("class", "nodeText")
            .attr("text-anchor", "middle")
            .attr("x", g.node(d).x + nodeAttr.width/2)
