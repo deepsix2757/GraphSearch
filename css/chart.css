@@ -43,6 +43,10 @@ body {
     float: left;
 }
 
+#nodeId {
+    width: 80px;
+}
+
 .node {
     border-radius: 25px;
 }
