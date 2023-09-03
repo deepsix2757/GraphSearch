@@ -6,7 +6,41 @@ body {
 }
 
 #menu {
+    width: 200px;
+    height: 800px;
+    float: left; 
+    background: #180a98; 
+    border-radius: 10px;
     font: 1em sans-serif white;
+}
+
+#menuText {
+    float: left; 
+    margin-top: 20px; 
+    margin-left: 10px; 
+    margin-left: 10px; 
+    color: white;
+}
+
+#menuInput {
+    float: left; 
+    margin-top: 20px; 
+    margin-left: 10px; 
+    margin-left: 10px;
+}
+
+#minimap {
+    width: 150px; 
+    height: 200px; 
+    position: absolute; 
+    opacity: 0.3; 
+    background: #98989b;
+}
+
+#chart {
+    width: 600px; 
+    height: 800px; 
+    float: left;
 }
 
 .node {
